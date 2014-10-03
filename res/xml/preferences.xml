@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >       
+        <CheckBoxPreference
+                android:key="appWhitelisting"
+                android:defaultValue="false"
+                android:title="Whitelist Apps"
+                android:summary="Allow only selected apps to be shown"/>
+        <Preference 
+                android:title="Choose Apps"
+                android:key="selectPackages"
+                android:dependency="appWhitelisting"
+                android:summary="Tap here to choose which apps are shown"/>
+</PreferenceScreen>         
