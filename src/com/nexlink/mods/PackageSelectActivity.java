@@ -5,20 +5,20 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import com.nexlink.launcher.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TabHost;
+
+import com.nexlink.launcher.R;
 
 public class PackageSelectActivity extends Activity {
 
@@ -60,7 +60,7 @@ public class PackageSelectActivity extends Activity {
 	        } catch (NameNotFoundException e) {}
 	    }
 	    Collections.sort(appInfos, new ApplicationInfo.DisplayNameComparator(packageManager));
-	    HashSet<String> enabled = new HashSet<String>();
+	    HashSet<String> enabled = (HashSet<String>) PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getStringSet("shownApps", new HashSet < String > ());
 		for(ApplicationInfo appInfo : appInfos){
 			if ((appInfo.flags & (ApplicationInfo.FLAG_UPDATED_SYSTEM_APP | ApplicationInfo.FLAG_SYSTEM)) > 0) {
 			    mSystemArrayAdapter.add(appInfo, enabled.contains(appInfo.packageName));       
@@ -74,15 +74,19 @@ public class PackageSelectActivity extends Activity {
 	}
 	
 	@Override
+	public void onPause(){
+		super.onPause();
+		finish();
+	}
+	
+	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		HashSet<String> enabled = new HashSet<String>();
-		enabled.addAll(mUserArrayAdapter.getEnabled());
-		enabled.addAll(mSystemArrayAdapter.getEnabled());
-		Intent intent = new Intent();
-		intent.setAction("com.nexlink.launcher.PACKAGE_SELECT");
-		intent.putStringArrayListExtra("packageNames", new ArrayList<String>(enabled));
-		sendBroadcast(intent);
+		HashSet<String> packageNames = new HashSet<String>();
+		packageNames.addAll(mUserArrayAdapter.getEnabled());
+		packageNames.addAll(mSystemArrayAdapter.getEnabled());
+		PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+		.edit().putStringSet("shownApps", new HashSet<String>(packageNames)).commit();
 	}
 	
 	@Override

@@ -62,6 +62,7 @@ import android.widget.Toast;
 
 import com.nexlink.launcher.R;
 import com.nexlink.launcher.DropTarget.DragObject;
+import com.nexlink.mods.Blocker;
 
 
 import java.lang.ref.WeakReference;
@@ -1089,6 +1090,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         ArrayList<Bitmap> images = new ArrayList<Bitmap>();
         for (int i = startIndex; i < endIndex; ++i) {
             ApplicationInfo info = mApps.get(i);
+            
             PagedViewIcon icon = (PagedViewIcon) mLayoutInflater.inflate(
                     R.layout.apps_customize_application, layout, false);
             icon.applyFromApplicationInfo(info, true, this);

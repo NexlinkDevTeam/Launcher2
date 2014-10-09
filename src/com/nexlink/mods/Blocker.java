@@ -7,16 +7,19 @@ import android.preference.PreferenceManager;
 import com.nexlink.launcher.LauncherApplication;
 
 public class Blocker {
-	protected static Boolean whitelistEnabled;
-	protected static HashSet<String> whitelist;
+	public static final String ACTION_RELOAD = "com.nexlink.launcher.ACTION_RELOAD";
+	
+	private static Boolean whitelistEnabled;
+	private static HashSet<String> whitelist;
 	
 	public static boolean isBlocked(String packageName){
 		if(whitelist == null){
 			whitelist = (HashSet<String>) PreferenceManager.getDefaultSharedPreferences(LauncherApplication.appContext).getStringSet("shownApps", new HashSet<String>());
+			System.out.println("LOADED " + whitelist.size());
 			whitelist.add("com.nexlink.mdmcontrolpanel");
 		}
 		if(whitelistEnabled == null){
-			whitelistEnabled = Boolean.valueOf(PreferenceManager.getDefaultSharedPreferences(LauncherApplication.appContext).getBoolean("appWhitelisting", true));
+			whitelistEnabled = Boolean.valueOf(PreferenceManager.getDefaultSharedPreferences(LauncherApplication.appContext).getBoolean("appWhitelisting", false));
 		}
 		if(!whitelistEnabled.booleanValue()){
 			return false;
@@ -30,9 +33,5 @@ public class Blocker {
 			}
 		}
 		return blocked;
-	}
-
-	public static void clear(){
-		PreferenceManager.getDefaultSharedPreferences(LauncherApplication.appContext).edit().clear().apply();
 	}
 }

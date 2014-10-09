@@ -27,6 +27,7 @@ import android.database.ContentObserver;
 import android.os.Handler;
 
 import com.nexlink.launcher.R;
+import com.nexlink.mods.Blocker;
 
 import java.lang.ref.WeakReference;
 

@@ -10,4 +10,8 @@
                 android:key="selectPackages"
                 android:dependency="appWhitelisting"
                 android:summary="Tap here to choose which apps are shown"/>
+        <Preference 
+                android:title="Restart"
+                android:key="restart"
+                android:summary="Restart and apply settings"/>
 </PreferenceScreen>         

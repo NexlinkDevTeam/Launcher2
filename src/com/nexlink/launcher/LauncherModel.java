@@ -49,6 +49,7 @@ import android.util.Log;
 
 import com.nexlink.launcher.R;
 import com.nexlink.launcher.InstallWidgetReceiver.WidgetMimeTypeHandlerData;
+import com.nexlink.mods.Blocker;
 
 
 import java.lang.ref.WeakReference;

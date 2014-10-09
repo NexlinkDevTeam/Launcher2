@@ -20,16 +20,16 @@ import android.widget.TextView;
 
 public class PackageItemAdapter extends ArrayAdapter < ApplicationInfo > {
 
-	private final HashSet < String > mEnabledSet;
+	private HashSet < String > mEnabledSet;
 	private PackageManager mPackageManager;
 	private LayoutInflater mLayoutInflater;
-
+	
 	public PackageItemAdapter(Context context) {
 		super(context, R.layout.package_list_item);
-		mEnabledSet = (HashSet<String>) PreferenceManager.getDefaultSharedPreferences(context).getStringSet("shownApps", new HashSet < String > ());
+		mEnabledSet = new HashSet<String>();
 		mPackageManager = context.getPackageManager();
 		mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
+		}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
